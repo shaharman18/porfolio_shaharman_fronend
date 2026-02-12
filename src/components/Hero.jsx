@@ -12,8 +12,9 @@ const Hero = () => {
             try {
                 const resumeRes = await api.get('/resume');
                 if (resumeRes.data) {
-                    // Points to the new dynamic serve endpoint
-                    setResumeUrl('/api/resume/view');
+                    // Use the absolute URL from the API config or environment
+                    const baseUrl = import.meta.env.VITE_API_URL || '';
+                    setResumeUrl(`${baseUrl}/api/resume/view`);
                 }
             } catch (err) {
                 console.error("Failed to fetch data:", err);

@@ -107,7 +107,7 @@ const Projects = () => {
                                 <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity">
                                     {project.image && (
                                         <img
-                                            src={project.image}
+                                            src={project.image.startsWith('http') ? project.image : `${import.meta.env.VITE_API_URL || ''}${project.image}`}
                                             alt={project.title}
                                             className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
                                             loading="lazy"
