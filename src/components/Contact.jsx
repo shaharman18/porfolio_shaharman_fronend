@@ -23,18 +23,19 @@ const Contact = () => {
         e.preventDefault();
         if (status.type === 'loading') return;
 
-        setStatus({ type: 'loading', message: 'Sending message... (Server may take 1 min to wake up)' });
+        setStatus({ type: 'loading', message: 'Initiating secure transmission... (Wait 60s)' });
 
         try {
+            console.log('Sending message to backend...');
             const res = await api.post('/contact', formData);
             setStatus({ type: 'success', message: res.data.message });
             setFormData({ name: '', email: '', subject: '', message: '' });
         } catch (err) {
-            console.error('Contact error:', err);
-            let errorMsg = err.response?.data?.message || 'Failed to send message';
+            console.error('Full Contact Error:', err);
+            let errorMsg = err.response?.data?.message || err.message || 'Transmission Interrupted';
 
-            if (err.code === 'ECONNABORTED' || err.message === 'Network Error') {
-                errorMsg = 'Server is waking up (Render free tier). Please wait 1 minute and try again.';
+            if (err.code === 'ECONNABORTED' || err.message?.includes('aborted') || err.message === 'Network Error') {
+                errorMsg = 'Connection timed out or aborted. The server is likely still waking up. Please WAIT 1 minute and try again.';
             }
 
             setStatus({ type: 'error', message: errorMsg });
