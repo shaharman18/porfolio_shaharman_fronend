@@ -21,7 +21,9 @@ const Contact = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setStatus({ type: 'loading', message: 'Sending message...' });
+        if (status.type === 'loading') return;
+
+        setStatus({ type: 'loading', message: 'Sending message... (Server may take 1 min to wake up)' });
 
         try {
             const res = await api.post('/contact', formData);
@@ -29,7 +31,13 @@ const Contact = () => {
             setFormData({ name: '', email: '', subject: '', message: '' });
         } catch (err) {
             console.error('Contact error:', err);
-            setStatus({ type: 'error', message: err.response?.data?.message || 'Failed to send message' });
+            let errorMsg = err.response?.data?.message || 'Failed to send message';
+
+            if (err.code === 'ECONNABORTED' || err.message === 'Network Error') {
+                errorMsg = 'Server is waking up (Render free tier). Please wait 1 minute and try again.';
+            }
+
+            setStatus({ type: 'error', message: errorMsg });
         }
     };
 

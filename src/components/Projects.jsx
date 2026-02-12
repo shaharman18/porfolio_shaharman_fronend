@@ -107,11 +107,19 @@ const Projects = () => {
                                 <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity">
                                     {project.image && (
                                         <img
-                                            src={project.image.startsWith('http') ? project.image : `${import.meta.env.VITE_API_URL || ''}${project.image}`}
+                                            src={
+                                                project.image.includes('assets/mockups')
+                                                    ? `https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800&content-type=image/png&title=${project.title}`
+                                                    : project.image.startsWith('http')
+                                                        ? project.image
+                                                        : `${import.meta.env.VITE_API_URL || ''}${project.image}`
+                                            }
                                             alt={project.title}
                                             className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
                                             loading="lazy"
-                                            onError={(e) => e.target.style.display = 'none'}
+                                            onError={(e) => {
+                                                e.target.src = 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800';
+                                            }}
                                         />
                                     )}
                                 </div>
