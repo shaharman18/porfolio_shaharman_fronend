@@ -12,8 +12,8 @@ const Hero = () => {
             try {
                 const resumeRes = await api.get('/resume');
                 if (resumeRes.data) {
-                    // Use the absolute URL from the API config or environment
-                    const baseUrl = import.meta.env.VITE_API_URL || '';
+                    // Points to your specific Render backend as a fallback
+                    const baseUrl = import.meta.env.VITE_API_URL || 'https://porfolio-shaharman-backend.onrender.com';
                     setResumeUrl(`${baseUrl}/api/resume/view`);
                 }
             } catch (err) {
