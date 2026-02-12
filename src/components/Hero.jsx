@@ -92,7 +92,7 @@ const Hero = () => {
                     </a>
 
                     <a
-                        href={resumeUrl || "/resume.pdf"}
+                        href={resumeUrl || 'https://porfolio-shaharman-backend.onrender.com/api/resume/view'}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="group px-10 py-4 bg-white/50 dark:bg-slate-800/50 backdrop-blur-md text-slate-900 dark:text-white rounded-2xl font-bold border border-slate-200 dark:border-slate-700 transition-all hover:scale-105 active:scale-95 flex items-center gap-3 shadow-lg"

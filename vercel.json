@@ -1,6 +1,18 @@
 {
     "rewrites": [
         {
+            "source": "/api/(.*)",
+            "destination": "https://porfolio-shaharman-backend.onrender.com/api/$1"
+        },
+        {
+            "source": "/uploads/(.*)",
+            "destination": "https://porfolio-shaharman-backend.onrender.com/uploads/$1"
+        },
+        {
+            "source": "/favicon.ico",
+            "destination": "/favicon1.png"
+        },
+        {
             "source": "/(.*)",
             "destination": "/index.html"
         }
