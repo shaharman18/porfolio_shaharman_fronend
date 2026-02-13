@@ -26,6 +26,11 @@ const AdminDashboard = () => {
         }
     }, [isAuthenticated]);
 
+    // Force dark mode for admin panel
+    useEffect(() => {
+        document.documentElement.classList.add('dark');
+    }, []);
+
     const checkAuth = async () => {
         try {
             const res = await api.get('/auth/status');
@@ -216,7 +221,12 @@ const AdminDashboard = () => {
     }
 
     return (
-        <div className="min-h-screen bg-[#030712] text-white p-8 pt-24 transition-colors duration-500">
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="min-h-screen bg-[#030712] text-white p-8 pt-24 transition-colors duration-500"
+        >
             <div className="max-w-7xl mx-auto">
                 <div className="flex justify-between items-center mb-16">
                     <div>
@@ -355,7 +365,7 @@ const AdminDashboard = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 };
 
