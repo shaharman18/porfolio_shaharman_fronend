@@ -1,94 +1,147 @@
 import { motion } from 'framer-motion';
-import { Monitor, Server, Database, BrainCircuit, PenTool } from 'lucide-react';
+import { Server, Database, Layout, Box, Cpu } from 'lucide-react';
 import { Reveal } from './index';
 
 const Skills = () => {
     const skillCategories = [
         {
-            title: "Frontend",
-            icon: <Monitor className="text-blue-400" />,
-            skills: ["React.js", "JavaScript (ES6+)", "Tailwind CSS", "GSAP", "Framer Motion", "Redux Toolkit"]
+            title: "Frontend Development",
+            id: "frontend",
+            icon: <Layout className="w-6 h-6" />,
+            description: "Building responsive, interactive user interfaces with modern frameworks.",
+            color: "text-blue-500",
+            bg: "bg-blue-500/10",
+            border: "border-blue-500/20",
+            skills: [
+                { name: "React.js", level: 90 },
+                { name: "JavaScript (ES6+)", level: 85 },
+                { name: "Tailwind CSS", level: 95 },
+                { name: "GSAP", level: 75 },
+                { name: "Framer Motion", level: 80 },
+                { name: "Redux Toolkit", level: 85 },
+                { name: "HTML5/CSS3", level: 95 },
+                { name: "Vite", level: 90 }
+            ]
         },
         {
-            title: "Backend",
-            icon: <Server className="text-emerald-400" />,
-            skills: ["Java (Core)", "Servlets & JSP", "Node.js", "Express.js", "REST APIs"]
+            title: "Backend Engineering",
+            id: "backend",
+            icon: <Server className="w-6 h-6" />,
+            description: "Architecting robust server-side logic and scalable APIs.",
+            color: "text-emerald-500",
+            bg: "bg-emerald-500/10",
+            border: "border-emerald-500/20",
+            skills: [
+                { name: "Node.js", level: 85 },
+                { name: "Express.js", level: 90 },
+                { name: "Java (Core)", level: 80 },
+                { name: "Servlets & JSP", level: 75 },
+                { name: "REST APIs", level: 95 },
+                { name: "Authentication (JWT)", level: 90 },
+                { name: "Microservices", level: 70 }
+            ]
         },
         {
-            title: "Database",
-            icon: <Database className="text-purple-400" />,
-            skills: ["MySQL", "PostgreSQL", "MongoDB"]
+            title: "Database Management",
+            id: "database",
+            icon: <Database className="w-6 h-6" />,
+            description: "Designing efficient schemas and managing data persistence.",
+            color: "text-purple-500",
+            bg: "bg-purple-500/10",
+            border: "border-purple-500/20",
+            skills: [
+                { name: "MongoDB", level: 90 },
+                { name: "PostgreSQL", level: 80 },
+                { name: "MySQL", level: 85 },
+                { name: "Mongoose", level: 90 },
+                { name: "Redis", level: 60 }
+            ]
         },
         {
-            title: "Tools",
-            icon: <PenTool className="text-red-400" />,
-            skills: ["Git & GitHub", "VS Code", "Postman", "AWS", "Vercel"]
+            title: "DevOps & Tools",
+            id: "tools",
+            icon: <Box className="w-6 h-6" />,
+            description: "Streamlining development workflows and deployment pipelines.",
+            color: "text-orange-500",
+            bg: "bg-orange-500/10",
+            border: "border-orange-500/20",
+            skills: [
+                { name: "Git & GitHub", level: 95 },
+                { name: "Docker", level: 75 },
+                { name: "AWS", level: 65 },
+                { name: "Vercel / Netlify", level: 90 },
+                { name: "Postman", level: 95 },
+                { name: "VS Code", level: 100 }
+            ]
         }
     ];
 
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.1
-            }
-        }
-    };
-
-    const itemVariants = {
-        hidden: { opacity: 0, y: 20 },
-        visible: { opacity: 1, y: 0 }
-    };
-
     return (
-        <section id="skills" className="py-24 bg-slate-50 dark:bg-gray-900 border-t border-slate-200 dark:border-gray-800 transition-colors duration-300">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section id="skills" className="py-24 bg-slate-50 dark:bg-gray-900 border-t border-slate-200 dark:border-gray-800 transition-colors duration-300 relative overflow-hidden">
+            {/* Background Gradient */}
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-gray-900 dark:via-gray-900 dark:to-blue-900/10 opacity-60" />
+
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="text-center mb-20">
                     <Reveal width="100%">
-                        <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-6 font-display tracking-tight">Technical Arsenal</h2>
+                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-sm font-bold mb-6">
+                            <Cpu size={16} />
+                            <span>Technical Proficiency</span>
+                        </div>
                     </Reveal>
-                    <div className="w-24 h-1.5 bg-blue-500 mx-auto rounded-full mb-8 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
                     <Reveal width="100%">
-                        <p className="max-w-2xl mx-auto text-xl text-slate-600 dark:text-slate-400 font-medium">
-                            A specialized toolkit focused on creating high-performance web applications
-                            and scalable enterprise architectures.
+                        <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-6 font-display tracking-tight">
+                            My <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-emerald-500">Tech Arsenal</span>
+                        </h2>
+                    </Reveal>
+                    <Reveal width="100%">
+                        <p className="max-w-2xl mx-auto text-xl text-slate-600 dark:text-slate-400 font-medium leading-relaxed">
+                            A carefully cultivated stack of modern technologies focused on performance, scalability, and developer experience.
                         </p>
                     </Reveal>
                 </div>
 
-                <motion.div
-                    variants={containerVariants}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-                >
-                    {skillCategories.map((category) => (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {skillCategories.map((category, idx) => (
                         <motion.div
-                            key={category.title}
-                            variants={itemVariants}
-                            className="p-8 rounded-[2rem] glass-card hover-lift transition-all duration-500 group"
+                            key={category.id}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5, delay: idx * 0.1 }}
+                            className="bg-white dark:bg-slate-900/40 backdrop-blur-xl rounded-[2rem] p-8 border border-slate-200 dark:border-slate-800 hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-all hover:shadow-2xl hover:shadow-blue-500/5 group"
                         >
-                            <div className="flex flex-col items-center text-center gap-5 mb-8">
-                                <div className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-900 shadow-inner group-hover:scale-110 transition-transform duration-500 border border-slate-200 dark:border-slate-800">
+                            <div className="flex items-center gap-4 mb-8">
+                                <div className={`p-4 rounded-2xl ${category.bg} ${category.color} ${category.border} border shadow-sm group-hover:scale-110 transition-transform duration-500`}>
                                     {category.icon}
                                 </div>
-                                <h3 className="text-2xl font-bold text-slate-900 dark:text-white font-display tracking-tight">{category.title}</h3>
+                                <div>
+                                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white font-display text-left">{category.title}</h3>
+                                    <p className="text-sm text-slate-500 dark:text-slate-400 font-medium text-left mt-1">{category.description}</p>
+                                </div>
                             </div>
-                            <div className="flex flex-wrap justify-center gap-2">
-                                {category.skills.map((skill) => (
-                                    <span
-                                        key={skill}
-                                        className="px-4 py-2 rounded-xl bg-white dark:bg-slate-950 text-slate-700 dark:text-slate-300 text-xs font-bold border border-slate-200 dark:border-slate-800 hover:border-blue-500/50 hover:text-blue-500 transition-all duration-300 shadow-sm cursor-default"
+
+                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                {category.skills.map((skill, i) => (
+                                    <motion.div
+                                        key={skill.name}
+                                        whileHover={{ scale: 1.05, y: -2 }}
+                                        className="relative p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700/50 overflow-hidden group/pill cursor-default"
                                     >
-                                        {skill}
-                                    </span>
+                                        <div
+                                            className={`absolute bottom-0 left-0 h-1 ${category.bg.replace('/10', '/50')} transition-all duration-700 w-0 group-hover/pill:w-full`}
+                                        />
+                                        <div className="relative z-10 flex flex-col items-center justify-center text-center h-full">
+                                            <span className="text-sm font-bold text-slate-700 dark:text-slate-300 group-hover/pill:text-slate-900 dark:group-hover/pill:text-white transition-colors">
+                                                {skill.name}
+                                            </span>
+                                        </div>
+                                    </motion.div>
                                 ))}
                             </div>
                         </motion.div>
                     ))}
-                </motion.div>
+                </div>
             </div>
         </section>
     );

@@ -1,33 +1,48 @@
-import { Link } from 'react-router-dom';
+import { Github, Linkedin, Mail } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Footer = () => {
-    const name = "Shah Arman";
-    const location = "Thane, Maharashtra, India";
-
     return (
-        <footer className="py-16 glass-nav transition-all duration-500">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
-                    <div className="text-3xl font-extrabold bg-gradient-to-r from-blue-500 to-emerald-500 bg-clip-text text-transparent font-display tracking-tight">
-                        {name}
-                    </div>
-                    <div className="flex gap-10 text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">
-                        <a href="#about" className="hover:text-blue-500 transition-colors">About</a>
-                        <a href="#projects" className="hover:text-blue-500 transition-colors">Projects</a>
-                        <a href="#contact" className="hover:text-blue-500 transition-colors">Contact</a>
-                    </div>
-                </div>
-
-                <div className="h-px w-full bg-gradient-to-r from-transparent via-slate-200 dark:via-slate-800 to-transparent mb-12" />
-
+        <footer className="py-12 bg-white dark:bg-[#030712] border-t border-slate-200 dark:border-slate-800 transition-colors duration-300">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-                    <p className="text-slate-500 dark:text-slate-500 text-sm font-medium">
-                        &copy; {new Date().getFullYear()} {name}. Developed for the modern web.
-                    </p>
-                    <p className="text-xs text-blue-500/60 dark:text-blue-400/40 uppercase font-black tracking-[0.3em] flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-blue-500/50 animate-pulse"></span>
-                        {location}
-                    </p>
+                    <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8">
+                        <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 font-display">
+                            Shah Arman
+                        </span>
+                        <span className="hidden md:inline-block w-px h-6 bg-slate-200 dark:bg-slate-800" />
+                        <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">
+                            © {new Date().getFullYear()} All rights reserved.
+                        </p>
+                    </div>
+
+                    <div className="flex items-center gap-6">
+                        <motion.a
+                            whileHover={{ y: -3 }}
+                            href="https://github.com/shaharman18"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
+                        >
+                            <Github size={20} />
+                        </motion.a>
+                        <motion.a
+                            whileHover={{ y: -3 }}
+                            href="https://www.linkedin.com/in/shah-arman-696598269/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                        >
+                            <Linkedin size={20} />
+                        </motion.a>
+                        <motion.a
+                            whileHover={{ y: -3 }}
+                            href="mailto:shaharman604@gmail.com"
+                            className="text-slate-400 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors"
+                        >
+                            <Mail size={20} />
+                        </motion.a>
+                    </div>
                 </div>
             </div>
         </footer>
