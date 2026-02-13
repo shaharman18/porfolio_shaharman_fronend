@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import Toaster from './Toaster';
 import api from '../api/axios';
 import { motion } from 'framer-motion';
 import { Plus, Trash2, Edit2, Save, X, Upload, User, Shield } from 'lucide-react';
@@ -14,6 +15,7 @@ const AdminDashboard = () => {
         tech: '', github: '', demo: '', features: '', featured: false, image: ''
     });
     const [profileUpdates, setProfileUpdates] = useState({ username: '', password: '' });
+    const toasterRef = useRef(null);
 
     useEffect(() => {
         checkAuth();
@@ -64,7 +66,7 @@ const AdminDashboard = () => {
             await api.post('/auth/login', credentials);
             setIsAuthenticated(true);
         } catch (err) {
-            alert(err.response?.data?.message || 'Login failed');
+            toasterRef.current?.addToast(err.response?.data?.message || 'Login failed', 'error');
         }
     };
 
@@ -96,7 +98,7 @@ const AdminDashboard = () => {
             setIsEditing(null);
             fetchProjects();
         } catch (err) {
-            alert(err.response?.data?.message || 'Operation failed');
+            toasterRef.current?.addToast(err.response?.data?.message || 'Operation failed', 'error');
         }
     };
 
@@ -130,7 +132,7 @@ const AdminDashboard = () => {
             await api.delete(`/projects/${id}`);
             fetchProjects();
         } catch (err) {
-            alert(err.response?.data?.message || 'Delete failed');
+            toasterRef.current?.addToast(err.response?.data?.message || 'Delete failed', 'error');
         }
     };
 
@@ -143,9 +145,9 @@ const AdminDashboard = () => {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             fetchResume();
-            alert('Resume uploaded successfully!');
+            toasterRef.current?.addToast('Resume uploaded successfully!', 'success');
         } catch (err) {
-            alert(err.response?.data?.message || 'Upload failed');
+            toasterRef.current?.addToast(err.response?.data?.message || 'Upload failed', 'error');
         }
     };
 
@@ -153,70 +155,73 @@ const AdminDashboard = () => {
         e.preventDefault();
         try {
             await api.put('/auth/profile', profileUpdates);
-            alert('Profile updated successfully!');
+            toasterRef.current?.addToast('Profile updated successfully!', 'success');
             setProfileUpdates({ username: '', password: '' });
         } catch (err) {
-            alert(err.response?.data?.message || 'Update failed');
+            toasterRef.current?.addToast(err.response?.data?.message || 'Update failed', 'error');
         }
     };
 
     if (!isAuthenticated) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-[#030712] px-4 overflow-hidden relative">
-                <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px] animate-blob"></div>
-                <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-[100px] animate-blob animation-delay-2000"></div>
+            <>
+                <div className="min-h-screen flex items-center justify-center bg-[#030712] px-4 overflow-hidden relative">
+                    <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px] animate-blob"></div>
+                    <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-[100px] animate-blob animation-delay-2000"></div>
 
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="relative z-10 w-full max-w-md"
-                >
-                    <form onSubmit={handleLogin} className="glass-card p-10 rounded-[2.5rem] border border-slate-800/50 shadow-2xl">
-                        <div className="text-center mb-8">
-                            <h2 className="text-3xl font-extrabold text-white mb-2 font-display tracking-tight">Lockdown Portal</h2>
-                            <p className="text-slate-500 text-sm font-medium">Identity Verification Required</p>
-                        </div>
-
-                        <div className="mb-8 p-3 bg-blue-500/10 border border-blue-500/20 rounded-2xl text-blue-500 text-[10px] text-center font-black uppercase tracking-[0.3em] animate-pulse">
-                            Secure Encrypted Tunnel Active
-                        </div>
-
-                        <div className="space-y-4">
-                            <div className="relative group">
-                                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-blue-500 transition-colors" />
-                                <input
-                                    type="text"
-                                    placeholder="Username"
-                                    value={credentials.username}
-                                    onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
-                                    className="w-full pl-12 pr-5 py-4 rounded-2xl bg-slate-950/50 border border-slate-800 text-white focus:outline-none focus:border-blue-500/50 transition-all font-medium"
-                                />
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="relative z-10 w-full max-w-md"
+                    >
+                        <form onSubmit={handleLogin} className="glass-card p-10 rounded-[2.5rem] border border-slate-800/50 shadow-2xl">
+                            <div className="text-center mb-8">
+                                <h2 className="text-3xl font-extrabold text-white mb-2 font-display tracking-tight">Lockdown Portal</h2>
+                                <p className="text-slate-500 text-sm font-medium">Identity Verification Required</p>
                             </div>
-                            <input
-                                type="password"
-                                placeholder="Security Token (Password)"
-                                value={credentials.password}
-                                onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
-                                className="w-full px-5 py-4 rounded-2xl bg-slate-950/50 border border-slate-800 text-white focus:outline-none focus:border-blue-500/50 transition-all font-medium"
-                            />
-                            <div className="pt-2">
-                                <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 pl-1">Master Authorization Key</label>
+
+                            <div className="mb-8 p-3 bg-blue-500/10 border border-blue-500/20 rounded-2xl text-blue-500 text-[10px] text-center font-black uppercase tracking-[0.3em] animate-pulse">
+                                Secure Encrypted Tunnel Active
+                            </div>
+
+                            <div className="space-y-4">
+                                <div className="relative group">
+                                    <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-blue-500 transition-colors" />
+                                    <input
+                                        type="text"
+                                        placeholder="Username"
+                                        value={credentials.username}
+                                        onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
+                                        className="w-full pl-12 pr-5 py-4 rounded-2xl bg-slate-950/50 border border-slate-800 text-white focus:outline-none focus:border-blue-500/50 transition-all font-medium"
+                                    />
+                                </div>
                                 <input
                                     type="password"
-                                    placeholder="••••••••••••"
-                                    value={credentials.passcode}
-                                    onChange={(e) => setCredentials({ ...credentials, passcode: e.target.value })}
-                                    className="w-full px-5 py-4 rounded-2xl bg-slate-950/50 border border-emerald-500/30 text-emerald-400 focus:outline-none focus:border-emerald-500/50 transition-all font-mono text-center tracking-widest uppercase"
+                                    placeholder="Security Token (Password)"
+                                    value={credentials.password}
+                                    onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
+                                    className="w-full px-5 py-4 rounded-2xl bg-slate-950/50 border border-slate-800 text-white focus:outline-none focus:border-blue-500/50 transition-all font-medium"
                                 />
+                                <div className="pt-2">
+                                    <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 pl-1">Master Authorization Key</label>
+                                    <input
+                                        type="password"
+                                        placeholder="••••••••••••"
+                                        value={credentials.passcode}
+                                        onChange={(e) => setCredentials({ ...credentials, passcode: e.target.value })}
+                                        className="w-full px-5 py-4 rounded-2xl bg-slate-950/50 border border-emerald-500/30 text-emerald-400 focus:outline-none focus:border-emerald-500/50 transition-all font-mono text-center tracking-widest uppercase"
+                                    />
+                                </div>
                             </div>
-                        </div>
 
-                        <button type="submit" className="w-full mt-8 py-5 bg-white text-slate-950 rounded-2xl font-black uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-blue-500/5">
-                            Authorize Session
-                        </button>
-                    </form>
-                </motion.div>
-            </div>
+                            <button type="submit" className="w-full mt-8 py-5 bg-white text-slate-950 rounded-2xl font-black uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-blue-500/5">
+                                Authorize Session
+                            </button>
+                        </form>
+                    </motion.div>
+                </div>
+                <Toaster ref={toasterRef} />
+            </>
         );
     }
 
@@ -365,6 +370,7 @@ const AdminDashboard = () => {
                     </div>
                 </div>
             </div>
+            <Toaster ref={toasterRef} />
         </motion.div>
     );
 };

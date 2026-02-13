@@ -9,3 +9,5 @@ export { default as Footer } from './Footer';
 export { default as CustomCursor } from './CustomCursor';
 export { default as Reveal } from './Reveal';
 export { default as AdminDashboard } from './AdminDashboard';
+export { default as Toaster } from './Toaster';
+
